@@ -2,7 +2,8 @@ import { AppContext } from './AppContext';
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, LockFill, TrophyFill, Gem } from 'react-bootstrap-icons';
+import PlayerAward from './PlayerAward';
 
 export default function GameGrid() {
     const { selectedColor, winners, setWinner, grid, setGrid, size } = useContext(AppContext);
@@ -18,6 +19,25 @@ export default function GameGrid() {
             checkForWinner(newGrid, setWinner, winners); // Check for a winner after setting a color
         }
     };
+
+    const getCellStyle = (cellColor) => {
+        var lockedBg = "linear-gradient(to bottom, " + cellColor + ", #666666, " + cellColor + ", #999999)";
+        var noColorBg = "transparent";
+        var activeBg = "linear-gradient(to bottom right, " + cellColor + ", #666666)";
+        var style = {};
+
+        if (!cellColor) {
+            style = { background: noColorBg }
+        } else if (winners.includes(cellColor)) {
+            style = { background: lockedBg }
+        } else {
+            style = { background: activeBg }
+        }
+
+        return style
+    }
+
+
     return <div className="grid shadow-lg p-3 rounded">
         {grid.map((row, rowIndex) => (
             <div className="grid-row d-flex align-items-center mb-2" key={rowIndex}>
@@ -32,10 +52,10 @@ export default function GameGrid() {
                     <div
                         className="grid-cell border rounded mx-1 shadow-sm"
                         key={cell.id}
-                        style={{ backgroundColor: cell.color || 'transparent' }}
+                        style={getCellStyle(cell.color)}
                         onClick={() => handleCellClick(rowIndex, colIndex)}
                     >
-                        {cell.id}
+                        <PlayerAward player={cell.color} winners={winners} size={40} />
                     </div>
                 ))}
                 <Button

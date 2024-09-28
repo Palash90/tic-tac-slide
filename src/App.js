@@ -30,7 +30,7 @@ const GridApp = () => {
 
   const setWinner = (winner) => addWinner(winner, winners, setWinners);
   const clearWinners = () => setWinners([]);
-
+  
   const contextValue = {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
