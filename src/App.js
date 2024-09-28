@@ -17,8 +17,8 @@ const GridApp = () => {
     );
   };
 
-  const [size, setSize] = useState(4); // Grid size (both rows and columns)
-  const [grid, setGrid] = useState(initializeGrid(4));
+  const [size, setSize] = useState(8); // Grid size (both rows and columns)
+  const [grid, setGrid] = useState(initializeGrid(8));
   const [selectedColor, setSelectedColor] = useState(colors[0]); // Default color selection
   const [darkTheme, setDarkTheme] = useState(false); // Theme state
   const [winner, setWinner] = useState(null); // State to store winner color
@@ -90,8 +90,16 @@ const GridApp = () => {
 
   // Helper function to check if all blocks in a line (row/column/diagonal) have the same color
   const checkLine = (line) => {
-    const color = line[0].color;
-    return color && line.every(cell => cell.color === color);
+    //const color = line[0].color;
+    //return color && line.every(cell => cell.color === color);
+    for (let i = 0; i <= line.length - 4; i++) {
+      const color = line[i].color;
+      // Check if the current color is defined and if the next three elements have the same color
+      if (color && line[i + 1].color === color && line[i + 2].color === color && line[i + 3].color === color) {
+        return true; // Found four consecutive elements with the same color
+      }
+    }
+    return false; // No consecutive four elements found with the same color
   };
 
   return (
