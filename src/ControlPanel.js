@@ -4,7 +4,8 @@ import { AppContext } from './AppContext';
 import { useContext } from 'react';
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, selectedColorName, selectedColor, darkTheme, setSelectedColor, setSelectedColorName, setWinner, setGrid, initializeGrid, size } = useContext(AppContext);
+    const { colors, allColors, setColors, selectedColorName, selectedColor, setSelectedColor, setSelectedColorName, setWinner, setGrid, initializeGrid, size } = useContext(AppContext);
+
     const renderPlayers = () => {
         switch (colors.length) {
             case 2: return <Icon2CircleFill />;
@@ -46,7 +47,7 @@ const ControlPanel = () => {
                 title={`Selected Color: ${selectedColorName}`}
                 className="w-100"
                 style={{ color: { selectedColor } }}
-                variant={darkTheme ? 'secondary' : 'primary'}
+                variant='secondary'
             >
                 {colors.map((color) => (
                     <Dropdown.Item
@@ -60,7 +61,7 @@ const ControlPanel = () => {
             </DropdownButton>
         </Col>
         <Col md={2} className="text-end">
-            <Button variant={darkTheme ? 'light' : 'dark'} onClick={() => {
+            <Button variant='light' onClick={() => {
                 setWinner(null);
                 setGrid(initializeGrid(size));
             }}>

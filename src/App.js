@@ -27,15 +27,13 @@ const GridApp = () => {
   const [grid, setGrid] = useState(initializeGrid(8));
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
-  const [darkTheme, setDarkTheme] = useState(true); // Theme state
   const [winner, setWinner] = useState(null); // State to store winner color
 
   const contextValue = {
     colors, allColors, setColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
     selectedColorName, setSelectedColorName,
-    darkTheme, setDarkTheme, winner, setWinner,
-    initializeGrid
+    winner, setWinner, initializeGrid
   }
 
   const handleCellClick = (rowIndex, colIndex) => {
@@ -51,11 +49,9 @@ const GridApp = () => {
     }
   };
 
-
-
   return (
     <AppContext.Provider value={contextValue}>
-      <Container className={`grid-container main-content p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
+      <Container className="grid-container main-content p-4 dark-theme">
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
 
         {winner && (
