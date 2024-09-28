@@ -44,11 +44,12 @@ const GridApp = () => {
       <Row className="mb-4">
         <Col md={4}>
           <input
-            type="number"
+            type="range"
             className="form-control"
             value={colors.length}
             max={6}
             min={2}
+            step={1}
             onChange={(e) => {
               const value = parseInt(e.target.value);
               var playerColors = allColors.slice(0,value);
@@ -56,6 +57,7 @@ const GridApp = () => {
             }}
             placeholder="Number of players"
           />
+          <label>{colors.length}</label>
         </Col>
         <Col md={4}>
           <DropdownButton
