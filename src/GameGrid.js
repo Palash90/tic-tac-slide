@@ -21,7 +21,7 @@ export default function GameGrid() {
     };
 
     const getCellStyle = (cellColor) => {
-        var lockedBg = "linear-gradient(to bottom, " + cellColor + ", #666666, " + cellColor + ", #999999)";
+        var lockedBg = "linear-gradient(to top right, #333333, " + cellColor + ", #666666, " + cellColor + ", #999999, " + cellColor + ", #cccccc, " + cellColor + ", white)";
         var noColorBg = "transparent";
         var activeBg = "linear-gradient(to bottom right, " + cellColor + ", #666666)";
         var style = {};
