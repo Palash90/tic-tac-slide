@@ -1,7 +1,12 @@
 /* Light theme */
 .light-theme {
-  background-color: #f8f9fa;
+  background-color: #dfdfc7;
   color: #000;
+}
+
+/* Dark theme grid styling */
+.light-theme .grid-cell {
+  border: 2px solid #271010;
 }
 
 .dark-theme {

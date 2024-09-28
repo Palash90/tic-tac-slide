@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
+import allColors from './playerColors';
 
-const colors = [{ name: 'Red', val: '#FF6347' }, { name: 'Blue', val: '#4682B4' }, { name: 'Yellow', val: '#FFD700' }, { name: 'Green', val: '#32CD32' }];
 
 const GridApp = () => {
 
@@ -18,7 +18,8 @@ const GridApp = () => {
     );
   };
 
-  const [size, setSize] = useState(8); // Grid size (both rows and columns)
+  const [colors, setColors] = useState(allColors.slice(0, 2));
+  const [size] = useState(8); // Grid size (both rows and columns)
   const [grid, setGrid] = useState(initializeGrid(8));
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
@@ -38,10 +39,6 @@ const GridApp = () => {
     }
   };
 
-  const handleThemeToggle = () => {
-    setDarkTheme(!darkTheme);
-  };
-
   return (
     <Container className={`grid-container p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
       <Row className="mb-4">
@@ -49,13 +46,15 @@ const GridApp = () => {
           <input
             type="number"
             className="form-control"
-            value={size}
+            value={colors.length}
+            max={6}
+            min={2}
             onChange={(e) => {
               const value = parseInt(e.target.value);
-              setSize(value);
-              setGrid(initializeGrid(value));
+              var playerColors = allColors.slice(0,value);
+              setColors(playerColors)
             }}
-            placeholder="Grid Size"
+            placeholder="Number of players"
           />
         </Col>
         <Col md={3}>
@@ -63,7 +62,7 @@ const GridApp = () => {
             id="dropdown-basic-button"
             title={`Selected Color: ${selectedColorName}`}
             className="w-100"
-            style={{color: {selectedColor}}}
+            style={{ color: { selectedColor } }}
             variant={darkTheme ? 'secondary' : 'primary'}
           >
             {colors.map((color) => (
@@ -78,11 +77,6 @@ const GridApp = () => {
           </DropdownButton>
         </Col>
         <Col md={3} className="text-end">
-          <Button variant={darkTheme ? 'light' : 'dark'} onClick={handleThemeToggle}>
-            Toggle {darkTheme ? 'Light' : 'Dark'} Theme
-          </Button>
-        </Col>
-        <Col md={3} className="text-end">
           <Button variant={darkTheme ? 'light' : 'dark'} onClick={() => {
             setWinner(null);
             setGrid(initializeGrid(size));
@@ -94,7 +88,7 @@ const GridApp = () => {
 
       {winner && (
         <Alert variant="success" className="text-center">
-          {`${winner.charAt(0).toUpperCase() + winner.slice(1)} is the winner!`}
+          {`${allColors.find(t => t.val === winner).name} is the winner!`}
         </Alert>
       )}
 
