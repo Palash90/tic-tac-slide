@@ -26,6 +26,7 @@ const ControlPanel = () => {
     const renderPlayerIcons = () => {
         return colors.map((color) => {
             const active = color.val === selectedColor
+            const winner = winners.includes(color.val)
 
             if (active) {
                 return <Col>
@@ -42,8 +43,10 @@ const ControlPanel = () => {
                                 color={color.val}
                                 size={45}
                                 onClick={() => {
-                                    setSelectedColor(color.val);
-                                    setSelectedColorName(color.name);
+                                    if (!winner) {
+                                        setSelectedColor(color.val);
+                                        setSelectedColorName(color.name);
+                                    }
                                 }} />
                         </Col>
                         <Col></Col>
@@ -64,8 +67,10 @@ const ControlPanel = () => {
                                 color={color.val}
                                 size={30}
                                 onClick={() => {
-                                    setSelectedColor(color.val);
-                                    setSelectedColorName(color.name);
+                                    if (!winner) {
+                                        setSelectedColor(color.val);
+                                        setSelectedColorName(color.name);
+                                    }
                                 }} />
                         </Col>
                         <Col></Col>

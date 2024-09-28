@@ -5,7 +5,6 @@ import allColors from './playerColors';
 import ControlPanel from './ControlPanel';
 import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
-import Winner from './Winner.js';
 import { addWinner } from './logic.js';
 
 const GridApp = () => {
@@ -30,7 +29,7 @@ const GridApp = () => {
 
   const setWinner = (winner) => addWinner(winner, winners, setWinners);
   const clearWinners = () => setWinners([]);
-  
+
   const contextValue = {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
@@ -42,7 +41,6 @@ const GridApp = () => {
     <AppContext.Provider value={contextValue}>
       <Container className="grid-container main-content p-4 dark-theme">
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        <Winner />
         <GameGrid />
       </Container>
     </AppContext.Provider>

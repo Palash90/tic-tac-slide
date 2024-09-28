@@ -11,8 +11,8 @@ export default function GameGrid() {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
 
-        // Only allow color change if the cell is not locked
-        if (!cell.locked) {
+        // Only allow color change if the cell is not locked and if the selected color is not winner
+        if (!cell.locked && !winners.includes(selectedColor)) {
             cell.color = selectedColor;
             cell.locked = true; // Lock the cell after it gets a color
             setGrid(newGrid);
@@ -29,7 +29,7 @@ export default function GameGrid() {
         if (!cellColor) {
             style = { background: noColorBg }
         } else if (winners.includes(cellColor)) {
-            style = { background: lockedBg }
+            style = { background: lockedBg, transform: "scale(1)" }
         } else {
             style = { background: activeBg }
         }
