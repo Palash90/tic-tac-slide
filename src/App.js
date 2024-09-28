@@ -40,9 +40,9 @@ const GridApp = () => {
   };
 
   return (
-    <Container className={`grid-container p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
+    <Container className={`grid-container main-content p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
       <Row className="mb-4">
-        <Col md={3}>
+        <Col md={4}>
           <input
             type="number"
             className="form-control"
@@ -57,7 +57,7 @@ const GridApp = () => {
             placeholder="Number of players"
           />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <DropdownButton
             id="dropdown-basic-button"
             title={`Selected Color: ${selectedColorName}`}
@@ -76,7 +76,7 @@ const GridApp = () => {
             ))}
           </DropdownButton>
         </Col>
-        <Col md={3} className="text-end">
+        <Col md={4} className="text-end">
           <Button variant={darkTheme ? 'light' : 'dark'} onClick={() => {
             setWinner(null);
             setGrid(initializeGrid(size));

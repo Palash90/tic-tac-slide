@@ -21,7 +21,7 @@ const allColors = [
     },
     {
         name: "Pink",
-        val: "#BC8F8F"
+        val: "#CC9F9F"
     }
 ];
 
