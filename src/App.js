@@ -105,7 +105,7 @@ const GridApp = () => {
   return (
     <Container className={`grid-container p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
       <Row className="mb-4">
-        <Col md={4}>
+        <Col md={3}>
           <input
             type="number"
             className="form-control"
@@ -118,7 +118,7 @@ const GridApp = () => {
             placeholder="Grid Size"
           />
         </Col>
-        <Col md={4}>
+        <Col md={3}>
           <DropdownButton
             id="dropdown-basic-button"
             title={`Selected Color: ${selectedColor}`}
@@ -136,9 +136,17 @@ const GridApp = () => {
             ))}
           </DropdownButton>
         </Col>
-        <Col md={4} className="text-end">
+        <Col md={3} className="text-end">
           <Button variant={darkTheme ? 'light' : 'dark'} onClick={handleThemeToggle}>
             Toggle {darkTheme ? 'Light' : 'Dark'} Theme
+          </Button>
+        </Col>
+        <Col md={3} className="text-end">
+          <Button variant={darkTheme ? 'light' : 'dark'} onClick={() => {
+            setWinner(null);
+            setGrid(initializeGrid(size));
+          }}>
+            Restart
           </Button>
         </Col>
       </Row>
