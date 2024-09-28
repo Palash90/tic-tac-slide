@@ -26,31 +26,58 @@ const ControlPanel = () => {
     const renderPlayerIcons = () => {
         return colors.map((color) => {
             const active = color.val === selectedColor
+
             if (active) {
-                return <><PersonCircle
-                    key={color.val}
-                    color={color.val}
-                    size={45}
-                    onClick={() => {
-                        setSelectedColor(color.val);
-                        setSelectedColorName(color.name);
-                    }} /><PlayerAward winners={winners} player={color.val} size={20} /></>
+                return <Col>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <PlayerAward winners={winners} player={color.val} size={15} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <PersonCircle
+                                key={color.val}
+                                color={color.val}
+                                size={45}
+                                onClick={() => {
+                                    setSelectedColor(color.val);
+                                    setSelectedColorName(color.name);
+                                }} />
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Col>
             } else {
-                return <><PersonFill
-                    key={color.val}
-                    color={color.val}
-                    size={30}
-                    onClick={() => {
-                        setSelectedColor(color.val);
-                        setSelectedColorName(color.name);
-                    }} /><PlayerAward winners={winners} player={color.val} size={10} /></>
+                return <Col>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <PlayerAward winners={winners} player={color.val} size={15} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <PersonFill
+                                key={color.val}
+                                color={color.val}
+                                size={30}
+                                onClick={() => {
+                                    setSelectedColor(color.val);
+                                    setSelectedColorName(color.name);
+                                }} />
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Col>
             }
         });
     }
 
     return <Row className="mb-3">
         <Col md={1}><PeopleFill size={30} values={colors.length} color='white' /></Col>
-        <Col md={3}>
+        <Col md={2}>
             <input
                 type="range"
                 className="form-control"
@@ -70,8 +97,8 @@ const ControlPanel = () => {
         <Col md={1}>
             {renderPlayers()}
         </Col>
-        <Col md={3}>
-            {renderPlayerIcons()}
+        <Col md={4}>
+            <Row>{renderPlayerIcons()}</Row>
         </Col>
         <Col md={1} className="text-end">
             <Button variant='light' onClick={() => resetGrid()}>
