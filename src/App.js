@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import './index.css'; // Using your index.css
-import {checkForWinner, handleColumnShift, handleRowShift} from './logic';
+import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 
-const colors = ['#FF6347', '#4682B4', '#FFD700', '#32CD32'];
+const colors = [{ name: 'Red', val: '#FF6347' }, { name: 'Blue', val: '#4682B4' }, { name: 'Yellow', val: '#FFD700' }, { name: 'Green', val: '#32CD32' }];
 
 const GridApp = () => {
-  
+
   // Initialize grid with unique IDs and no initial color
   const initializeGrid = (size) => {
     return Array.from({ length: size }, (_, rowIndex) =>
@@ -20,8 +20,9 @@ const GridApp = () => {
 
   const [size, setSize] = useState(8); // Grid size (both rows and columns)
   const [grid, setGrid] = useState(initializeGrid(8));
-  const [selectedColor, setSelectedColor] = useState(colors[0]); // Default color selection
-  const [darkTheme, setDarkTheme] = useState(false); // Theme state
+  const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
+  const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
+  const [darkTheme, setDarkTheme] = useState(true); // Theme state
   const [winner, setWinner] = useState(null); // State to store winner color
 
   const handleCellClick = (rowIndex, colIndex) => {
@@ -60,17 +61,18 @@ const GridApp = () => {
         <Col md={3}>
           <DropdownButton
             id="dropdown-basic-button"
-            title={`Selected Color: ${selectedColor}`}
+            title={`Selected Color: ${selectedColorName}`}
             className="w-100"
+            style={{color: {selectedColor}}}
             variant={darkTheme ? 'secondary' : 'primary'}
           >
             {colors.map((color) => (
               <Dropdown.Item
-                key={color}
-                onClick={() => setSelectedColor(color)}
-                style={{ backgroundColor: color, color: 'white', textAlign: 'center' }}
+                key={color.val}
+                onClick={() => { setSelectedColor(color.val); setSelectedColorName(color.name) }}
+                style={{ backgroundColor: color.val, color: 'white', textAlign: 'center' }}
               >
-                {color.charAt(0).toUpperCase() + color.slice(1)}
+                {color.name}
               </Dropdown.Item>
             ))}
           </DropdownButton>
