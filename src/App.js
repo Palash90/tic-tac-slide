@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Dropdown, DropdownButton, Alert } from 're
 import './index.css'; // Using your index.css
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 import allColors from './playerColors';
+import { PeopleFill, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise } from 'react-bootstrap-icons';
 
 
 const GridApp = () => {
@@ -39,25 +40,43 @@ const GridApp = () => {
     }
   };
 
+  const renderPlayers = () => {
+    switch (colors.length) {
+      case 2: return <Icon2CircleFill />;
+      case 3: return <Icon3CircleFill />;
+      case 4: return <Icon4CircleFill />;
+      case 5: return <Icon5CircleFill />;
+      case 6: return <Icon6CircleFill />;
+    }
+  };
+
   return (
     <Container className={`grid-container main-content p-4 ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
-      <Row className="mb-4">
-        <Col md={4}>
-          <input
-            type="range"
-            className="form-control"
-            value={colors.length}
-            max={6}
-            min={2}
-            step={1}
-            onChange={(e) => {
-              const value = parseInt(e.target.value);
-              var playerColors = allColors.slice(0,value);
-              setColors(playerColors)
-            }}
-            placeholder="Number of players"
-          />
-          <label>{colors.length}</label>
+      <Row className="mb-3">
+        <Col md={6}>
+          <Row className="mb-1">
+            <Col md={1}><PeopleFill size={24} values={colors.length} color='white' /></Col>
+            <Col md={3}>
+              <input
+                type="range"
+                className="form-control"
+                value={colors.length}
+                max={6}
+                min={2}
+                step={1}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  var playerColors = allColors.slice(0, value);
+                  setColors(playerColors)
+                }}
+                placeholder="Number of players"
+              />
+            </Col>
+
+            <Col md={1}>
+              {renderPlayers()}
+            </Col>
+          </Row>
         </Col>
         <Col md={4}>
           <DropdownButton
@@ -78,12 +97,12 @@ const GridApp = () => {
             ))}
           </DropdownButton>
         </Col>
-        <Col md={4} className="text-end">
+        <Col md={2} className="text-end">
           <Button variant={darkTheme ? 'light' : 'dark'} onClick={() => {
             setWinner(null);
             setGrid(initializeGrid(size));
           }}>
-            Restart
+            <ArrowClockwise />
           </Button>
         </Col>
       </Row>
@@ -102,7 +121,7 @@ const GridApp = () => {
               className="rotate-button"
               onClick={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid)}
             >
-              {'<'}
+              <ArrowLeft />
             </Button>
             {row.map((cell, colIndex) => (
               <div
@@ -119,7 +138,7 @@ const GridApp = () => {
               className="rotate-button"
               onClick={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid)}
             >
-              {'>'}
+              <ArrowRight />
             </Button>
           </div>
         ))}
@@ -131,14 +150,14 @@ const GridApp = () => {
                 className="rotate-button"
                 onClick={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid)}
               >
-                {'^'}
+                <ArrowUp />
               </Button>
               <Button
                 variant="outline-success"
                 className="rotate-button"
                 onClick={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid)}
               >
-                {'v'}
+                <ArrowDown />
               </Button>
             </div>
           ))}
