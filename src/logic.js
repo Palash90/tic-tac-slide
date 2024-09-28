@@ -102,3 +102,9 @@ export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid) {
     setGrid(newGrid);
     checkForWinner(newGrid, setWinner); // Check for a winner after shifting
 };
+
+export function addWinner(winner, winners, setWinners) {
+    if (!winners.includes(winner)) {
+        setWinners([...winners, winner])
+    }
+}

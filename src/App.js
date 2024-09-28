@@ -6,6 +6,7 @@ import ControlPanel from './ControlPanel';
 import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
 import Winner from './Winner.js';
+import { addWinner } from './logic.js';
 
 const GridApp = () => {
 
@@ -25,13 +26,16 @@ const GridApp = () => {
   const [grid, setGrid] = useState(initializeGrid(8));
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
-  const [winner, setWinner] = useState(null); // State to store winner color
+  const [winners, setWinners] = useState([]); // State to store winner color
+
+  const setWinner = (winner) => addWinner(winner, winners, setWinners);
+  const clearWinners = () => setWinners([]);
 
   const contextValue = {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
     selectedColorName, setSelectedColorName,
-    winner, setWinner, initializeGrid
+    winners, setWinner, initializeGrid, clearWinners
   }
 
   return (

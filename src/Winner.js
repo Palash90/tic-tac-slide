@@ -3,10 +3,12 @@ import { AppContext } from './AppContext';
 import { useContext } from 'react';
 
 export default function Winner() {
-    const { winner, allColors } = useContext(AppContext);
-    return winner && (
-        <Alert variant="success" className="text-center">
+    const { winners, allColors } = useContext(AppContext);
+    console.log(winners)
+    winners.map((winner) => {
+        return <Alert variant="success" className="text-center">
             {`${allColors.find(t => t.val === winner).name} is the winner!`}
         </Alert>
-    );
+    });
+
 }

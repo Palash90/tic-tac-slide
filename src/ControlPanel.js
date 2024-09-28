@@ -1,11 +1,11 @@
 import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill, Border, PersonCircle } from 'react-bootstrap-icons';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill, Border, PersonCircle, Trophy } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, selectedColorName, selectedColor, setSelectedColor, setSelectedColorName, setWinner, setGrid, initializeGrid, size } = useContext(AppContext);
+    const { colors, allColors, setColors, winner, selectedColor, setSelectedColor, setSelectedColorName, clearWinners, setGrid, initializeGrid, size } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -17,9 +17,16 @@ const ControlPanel = () => {
         }
     };
 
+    const resetGrid = () => {
+        clearWinners();
+        setGrid(initializeGrid(size));
+    }
+
     const renderPlayerIcons = () => {
         return colors.map((color) => {
-            if (color.val === selectedColor) {
+            const active = color.val === selectedColor
+            const winningUser = color.val === winner
+            if (active) {
                 return <PersonCircle
                     key={color.val}
                     color={color.val}
@@ -28,6 +35,15 @@ const ControlPanel = () => {
                         setSelectedColor(color.val);
                         setSelectedColorName(color.name);
                     }} />
+            } else if (winningUser) {
+                return <><PersonFill
+                    key={color.val}
+                    color={"Gray"}
+                    size={30}
+                    onClick={() => {
+                        setSelectedColor(color.val);
+                        setSelectedColorName(color.name);
+                    }} /><Trophy size={10} /></>
             } else {
                 return <PersonFill
                     key={color.val}
@@ -38,9 +54,7 @@ const ControlPanel = () => {
                         setSelectedColorName(color.name);
                     }} />
             }
-        }
-
-        );
+        });
     }
 
     return <Row className="mb-3">
@@ -57,6 +71,7 @@ const ControlPanel = () => {
                     const value = parseInt(e.target.value);
                     var playerColors = allColors.slice(0, value);
                     setColors(playerColors);
+                    resetGrid();
                 }}
                 placeholder="Number of players" />
         </Col>
@@ -68,10 +83,7 @@ const ControlPanel = () => {
             {renderPlayerIcons()}
         </Col>
         <Col md={1} className="text-end">
-            <Button variant='light' onClick={() => {
-                setWinner(null);
-                setGrid(initializeGrid(size));
-            }}>
+            <Button variant='light' onClick={() => resetGrid()}>
                 <ArrowClockwise />
             </Button>
         </Col>
