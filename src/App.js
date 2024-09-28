@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 
-const colors = ['red', 'green', 'yellow', 'magenta', 'blue', 'teal', 'cyan'];
+const colors = ['#FF6347', '#4682B4', '#FFD700', '#32CD32'];
 
 const GridApp = () => {
   
