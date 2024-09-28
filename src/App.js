@@ -67,26 +67,70 @@ const GridApp = () => {
 
   // Function to check if 4 blocks of the same color are in a row, column, or diagonal
   const checkForWinner = (grid) => {
+    const size = grid.length; // Assuming square grid
+    
+    // Check rows for four consecutive elements
     for (let i = 0; i < size; i++) {
-      // Check rows
-      if (checkLine(grid[i])) {
-        setWinner(grid[i][0].color);
-        return;
-      }
-      // Check columns
-      const column = grid.map(row => row[i]);
-      if (checkLine(column)) {
-        setWinner(column[0].color);
-        return;
+      for (let j = 0; j <= size - 4; j++) {
+        const rowSegment = grid[i].slice(j, j + 4); // Get a segment of 4
+        if (checkLine(rowSegment)) {
+          setWinner(rowSegment[0].color);
+          return;
+        }
       }
     }
+  
+    // Check columns for four consecutive elements
+    for (let j = 0; j < size; j++) {
+      for (let i = 0; i <= size - 4; i++) {
+        const columnSegment = [
+          grid[i][j],
+          grid[i + 1][j],
+          grid[i + 2][j],
+          grid[i + 3][j]
+        ]; // Collect 4 elements from the column
+        if (checkLine(columnSegment)) {
+          setWinner(columnSegment[0].color);
+          return;
+        }
+      }
+    }
+  
     // Check diagonals
-    const diagonal1 = grid.map((row, i) => row[i]);
-    const diagonal2 = grid.map((row, i) => row[size - 1 - i]);
-    if (checkLine(diagonal1) || checkLine(diagonal2)) {
-      setWinner(diagonal1[0].color || diagonal2[0].color);
+    // Top-left to bottom-right diagonals
+    for (let i = 0; i <= size - 4; i++) {
+      for (let j = 0; j <= size - 4; j++) {
+        const diagonal1 = [
+          grid[i][j],
+          grid[i + 1][j + 1],
+          grid[i + 2][j + 2],
+          grid[i + 3][j + 3]
+        ]; // Collect 4 elements from the diagonal
+        if (checkLine(diagonal1)) {
+          setWinner(diagonal1[0].color);
+          return;
+        }
+      }
+    }
+  
+    // Top-right to bottom-left diagonals
+    for (let i = 0; i <= size - 4; i++) {
+      for (let j = 3; j < size; j++) {
+        const diagonal2 = [
+          grid[i][j],
+          grid[i + 1][j - 1],
+          grid[i + 2][j - 2],
+          grid[i + 3][j - 3]
+        ]; // Collect 4 elements from the diagonal
+        if (checkLine(diagonal2)) {
+          setWinner(diagonal2[0].color);
+          return;
+        }
+      }
     }
   };
+  
+  
 
   // Helper function to check if all blocks in a line (row/column/diagonal) have the same color
   const checkLine = (line) => {
