@@ -2,10 +2,11 @@ import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill, Border, PersonCircle, Trophy } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
+import PlayerAward from './PlayerAward';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, winner, selectedColor, setSelectedColor, setSelectedColorName, clearWinners, setGrid, initializeGrid, size } = useContext(AppContext);
+    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, setSelectedColorName, clearWinners, setGrid, initializeGrid, size } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -25,34 +26,24 @@ const ControlPanel = () => {
     const renderPlayerIcons = () => {
         return colors.map((color) => {
             const active = color.val === selectedColor
-            const winningUser = color.val === winner
             if (active) {
-                return <PersonCircle
+                return <><PersonCircle
                     key={color.val}
                     color={color.val}
                     size={45}
                     onClick={() => {
                         setSelectedColor(color.val);
                         setSelectedColorName(color.name);
-                    }} />
-            } else if (winningUser) {
-                return <><PersonFill
-                    key={color.val}
-                    color={"Gray"}
-                    size={30}
-                    onClick={() => {
-                        setSelectedColor(color.val);
-                        setSelectedColorName(color.name);
-                    }} /><Trophy size={10} /></>
+                    }} /><PlayerAward winners={winners} player={color.val} size={20} /></>
             } else {
-                return <PersonFill
+                return <><PersonFill
                     key={color.val}
                     color={color.val}
                     size={30}
                     onClick={() => {
                         setSelectedColor(color.val);
                         setSelectedColorName(color.name);
-                    }} />
+                    }} /><PlayerAward winners={winners} player={color.val} size={10} /></>
             }
         });
     }
