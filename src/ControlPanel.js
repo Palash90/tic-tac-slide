@@ -1,7 +1,8 @@
-import { Button, Container, Row, Col, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
-import { PeopleFill, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise } from 'react-bootstrap-icons';
+import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
+
 
 const ControlPanel = () => {
     const { colors, allColors, setColors, selectedColorName, selectedColor, setSelectedColor, setSelectedColorName, setWinner, setGrid, initializeGrid, size } = useContext(AppContext);
