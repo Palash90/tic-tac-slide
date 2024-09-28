@@ -1,12 +1,12 @@
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
-export function checkForWinner(grid, setWinner) {
+export function checkForWinner(grid, setWinner, winners) {
     const size = grid.length; // Assuming square grid
 
     // Check rows for four consecutive elements
     for (let i = 0; i < size; i++) {
         for (let j = 0; j <= size - 4; j++) {
             const rowSegment = grid[i].slice(j, j + 4); // Get a segment of 4
-            if (checkLine(rowSegment)) {
+            if (checkLine(rowSegment, winners)) {
                 setWinner(rowSegment[0].color);
                 return;
             }
@@ -22,7 +22,7 @@ export function checkForWinner(grid, setWinner) {
                 grid[i + 2][j],
                 grid[i + 3][j]
             ]; // Collect 4 elements from the column
-            if (checkLine(columnSegment)) {
+            if (checkLine(columnSegment, winners)) {
                 setWinner(columnSegment[0].color);
                 return;
             }
@@ -39,7 +39,7 @@ export function checkForWinner(grid, setWinner) {
                 grid[i + 2][j + 2],
                 grid[i + 3][j + 3]
             ]; // Collect 4 elements from the diagonal
-            if (checkLine(diagonal1)) {
+            if (checkLine(diagonal1, winners)) {
                 setWinner(diagonal1[0].color);
                 return;
             }
@@ -55,7 +55,7 @@ export function checkForWinner(grid, setWinner) {
                 grid[i + 2][j - 2],
                 grid[i + 3][j - 3]
             ]; // Collect 4 elements from the diagonal
-            if (checkLine(diagonal2)) {
+            if (checkLine(diagonal2, winners)) {
                 setWinner(diagonal2[0].color);
                 return;
             }
@@ -66,20 +66,20 @@ export function checkForWinner(grid, setWinner) {
 
 
 // Helper function to check if all blocks in a line (row/column/diagonal) have the same color
-const checkLine = (line) => {
+const checkLine = (line, winners) => {
     //const color = line[0].color;
     //return color && line.every(cell => cell.color === color);
     for (let i = 0; i <= line.length - 4; i++) {
         const color = line[i].color;
         // Check if the current color is defined and if the next three elements have the same color
-        if (color && line[i + 1].color === color && line[i + 2].color === color && line[i + 3].color === color) {
+        if (color && line[i + 1].color === color && line[i + 2].color === color && line[i + 3].color === color && !winners.includes(color)) {
             return true; // Found four consecutive elements with the same color
         }
     }
     return false; // No consecutive four elements found with the same color
 };
 
-export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid) {
+export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid, winners) {
     const newGrid = [...grid];
     const column = newGrid.map(row => row[colIndex]);
     if (direction === 'up') {
@@ -89,10 +89,10 @@ export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid)
     }
     newGrid.forEach((row, i) => (row[colIndex] = column[i]));
     setGrid(newGrid);
-    checkForWinner(newGrid, setWinner); // Check for a winner after shifting
+    checkForWinner(newGrid, setWinner, winners); // Check for a winner after shifting
 };
 
-export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid) {
+export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid, winners) {
     const newGrid = [...grid];
     if (direction === 'left') {
         newGrid[rowIndex].push(newGrid[rowIndex].shift()); // Shift left
@@ -100,7 +100,7 @@ export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid) {
         newGrid[rowIndex].unshift(newGrid[rowIndex].pop()); // Shift right
     }
     setGrid(newGrid);
-    checkForWinner(newGrid, setWinner); // Check for a winner after shifting
+    checkForWinner(newGrid, setWinner, winners); // Check for a winner after shifting
 };
 
 export function addWinner(winner, winners, setWinners) {

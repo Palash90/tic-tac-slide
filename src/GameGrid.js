@@ -5,7 +5,7 @@ import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 
 export default function GameGrid() {
-    const { selectedColor, setWinner, grid, setGrid, size } = useContext(AppContext);
+    const { selectedColor, winners, setWinner, grid, setGrid, size } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
@@ -15,7 +15,7 @@ export default function GameGrid() {
             cell.color = selectedColor;
             cell.locked = true; // Lock the cell after it gets a color
             setGrid(newGrid);
-            checkForWinner(newGrid, setWinner); // Check for a winner after setting a color
+            checkForWinner(newGrid, setWinner, winners); // Check for a winner after setting a color
         }
     };
     return <div className="grid shadow-lg p-3 rounded">
@@ -24,7 +24,7 @@ export default function GameGrid() {
                 <Button
                     variant="outline-success"
                     className="rotate-button"
-                    onClick={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid)}
+                    onClick={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners)}
                 >
                     <ArrowLeft />
                 </Button>
@@ -41,7 +41,7 @@ export default function GameGrid() {
                 <Button
                     variant="outline-success"
                     className="rotate-button"
-                    onClick={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid)}
+                    onClick={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners)}
                 >
                     <ArrowRight />
                 </Button>
@@ -53,14 +53,14 @@ export default function GameGrid() {
                     <Button
                         variant="outline-success"
                         className="rotate-button"
-                        onClick={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid)}
+                        onClick={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners)}
                     >
                         <ArrowUp />
                     </Button>
                     <Button
                         variant="outline-success"
                         className="rotate-button"
-                        onClick={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid)}
+                        onClick={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners)}
                     >
                         <ArrowDown />
                     </Button>
