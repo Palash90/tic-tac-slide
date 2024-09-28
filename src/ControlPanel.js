@@ -1,5 +1,5 @@
 import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill } from 'react-bootstrap-icons';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill, Border, PersonCircle } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 
@@ -18,16 +18,29 @@ const ControlPanel = () => {
     };
 
     const renderPlayerIcons = () => {
-        return colors.map((color) => (
-            <PersonFill
-                key={color.val}
-                color={color.val}
-                size={30}
-                onClick={() => {
-                    setSelectedColor(color.val);
-                    setSelectedColorName(color.name);
-                }} />
-        ));
+        return colors.map((color) => {
+            if (color.val === selectedColor) {
+                return <PersonCircle
+                    key={color.val}
+                    color={color.val}
+                    size={45}
+                    onClick={() => {
+                        setSelectedColor(color.val);
+                        setSelectedColorName(color.name);
+                    }} />
+            } else {
+                return <PersonFill
+                    key={color.val}
+                    color={color.val}
+                    size={30}
+                    onClick={() => {
+                        setSelectedColor(color.val);
+                        setSelectedColorName(color.name);
+                    }} />
+            }
+        }
+
+        );
     }
 
     return <Row className="mb-3">
