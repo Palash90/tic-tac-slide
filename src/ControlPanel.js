@@ -1,5 +1,5 @@
 import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise } from 'react-bootstrap-icons';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 
@@ -17,51 +17,44 @@ const ControlPanel = () => {
         }
     };
 
-    return <Row className="mb-3">
-        <Col md={6}>
-            <Row className="mb-1">
-                <Col md={1}><PeopleFill size={24} values={colors.length} color='white' /></Col>
-                <Col md={3}>
-                    <input
-                        type="range"
-                        className="form-control"
-                        value={colors.length}
-                        max={6}
-                        min={2}
-                        step={1}
-                        onChange={(e) => {
-                            const value = parseInt(e.target.value);
-                            var playerColors = allColors.slice(0, value);
-                            setColors(playerColors);
-                        }}
-                        placeholder="Number of players" />
-                </Col>
+    const renderPlayerIcons = () => {
+        return colors.map((color) => (
+            <PersonFill
+                key={color.val}
+                color={color.val}
+                size={30}
+                onClick={() => {
+                    setSelectedColor(color.val);
+                    setSelectedColorName(color.name);
+                }} />
+        ));
+    }
 
-                <Col md={1}>
-                    {renderPlayers()}
-                </Col>
-            </Row>
+    return <Row className="mb-3">
+        <Col md={1}><PeopleFill size={30} values={colors.length} color='white' /></Col>
+        <Col md={3}>
+            <input
+                type="range"
+                className="form-control"
+                value={colors.length}
+                max={6}
+                min={2}
+                step={1}
+                onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    var playerColors = allColors.slice(0, value);
+                    setColors(playerColors);
+                }}
+                placeholder="Number of players" />
         </Col>
-        <Col md={4}>
-            <DropdownButton
-                id="dropdown-basic-button"
-                title={`Selected Color: ${selectedColorName}`}
-                className="w-100"
-                style={{ color: { selectedColor } }}
-                variant='secondary'
-            >
-                {colors.map((color) => (
-                    <Dropdown.Item
-                        key={color.val}
-                        onClick={() => { setSelectedColor(color.val); setSelectedColorName(color.name); }}
-                        style={{ backgroundColor: color.val, color: 'white', textAlign: 'center' }}
-                    >
-                        {color.name}
-                    </Dropdown.Item>
-                ))}
-            </DropdownButton>
+
+        <Col md={1}>
+            {renderPlayers()}
         </Col>
-        <Col md={2} className="text-end">
+        <Col md={3}>
+            {renderPlayerIcons()}
+        </Col>
+        <Col md={1} className="text-end">
             <Button variant='light' onClick={() => {
                 setWinner(null);
                 setGrid(initializeGrid(size));
