@@ -1,12 +1,14 @@
 import { AppContext } from './AppContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, LockFill, TrophyFill, Gem } from 'react-bootstrap-icons';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import PlayerAward from './PlayerAward';
 
 export default function GameGrid() {
-    const { selectedColor, winners, setWinner, grid, setGrid, size } = useContext(AppContext);
+    const [isHighlighted, setIsHighlighted] = useState(false);
+
+    const { selectedColor, winners, setWinner, grid, setGrid, size, pause, setPause } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
@@ -20,23 +22,26 @@ export default function GameGrid() {
         }
     };
 
-    const getCellStyle = (cellColor) => {
-        var lockedBg = "linear-gradient(to top right, #333333, " + cellColor + ", #666666, " + cellColor + ", #999999, " + cellColor + ", #cccccc, " + cellColor + ", white)";
+    const getCellStyle = (cell) => {
+        var lockedBg = "linear-gradient(to top right, #333333, " + cell.color + ", #666666, " + cell.color + ", #999999, " + cell.color + ", #cccccc, " + cell.color + ", white)";
         var noColorBg = "transparent";
-        var activeBg = "linear-gradient(to bottom right, " + cellColor + ", #666666)";
+        var activeBg = "linear-gradient(to bottom right, " + cell.color + ", #666666)";
         var style = {};
 
-        if (!cellColor) {
+        if (!cell.color) {
             style = { background: noColorBg }
-        } else if (winners.includes(cellColor)) {
+        } else if (winners.includes(cell.color)) {
             style = { background: lockedBg, transform: "scale(1)" }
         } else {
             style = { background: activeBg }
         }
 
+        if (cell.winningCell) {
+            style = { ...style, transform: "scale(1.3)" }
+        }
+
         return style
     }
-
 
     return <div className="grid shadow-lg p-3 rounded">
         {grid.map((row, rowIndex) => (
@@ -52,7 +57,7 @@ export default function GameGrid() {
                     <div
                         className="grid-cell border rounded mx-1 shadow-sm"
                         key={cell.id}
-                        style={getCellStyle(cell.color)}
+                        style={getCellStyle(cell)}
                         onClick={() => handleCellClick(rowIndex, colIndex)}
                     >
                         <PlayerAward player={cell.color} winners={winners} size={40} />

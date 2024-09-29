@@ -26,6 +26,7 @@ const GridApp = () => {
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
   const [winners, setWinners] = useState([]); // State to store winner color
+  const [pause, setPause] = useState(false);
 
   const setWinner = (winner) => addWinner(winner, winners, setWinners);
   const clearWinners = () => setWinners([]);
@@ -34,7 +35,8 @@ const GridApp = () => {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
     selectedColorName, setSelectedColorName,
-    winners, setWinner, initializeGrid, clearWinners
+    winners, setWinner, initializeGrid, clearWinners,
+    pause, setPause
   }
 
   return (

@@ -1,15 +1,20 @@
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
 export function checkForWinner(grid, setWinner, winners) {
     const size = grid.length; // Assuming square grid
+    
+    const checkAndSetWinningLine = (line) => {
+        if (checkLine(line, winners)) {
+            line.map((i) => i["winningCell"] = true);
+            setWinner(line[0].color);
+            return;
+        }
+    }
 
     // Check rows for four consecutive elements
     for (let i = 0; i < size; i++) {
         for (let j = 0; j <= size - 4; j++) {
             const rowSegment = grid[i].slice(j, j + 4); // Get a segment of 4
-            if (checkLine(rowSegment, winners)) {
-                setWinner(rowSegment[0].color);
-                return;
-            }
+            checkAndSetWinningLine(rowSegment);
         }
     }
 
@@ -22,10 +27,7 @@ export function checkForWinner(grid, setWinner, winners) {
                 grid[i + 2][j],
                 grid[i + 3][j]
             ]; // Collect 4 elements from the column
-            if (checkLine(columnSegment, winners)) {
-                setWinner(columnSegment[0].color);
-                return;
-            }
+            checkAndSetWinningLine(columnSegment);
         }
     }
 
@@ -39,10 +41,7 @@ export function checkForWinner(grid, setWinner, winners) {
                 grid[i + 2][j + 2],
                 grid[i + 3][j + 3]
             ]; // Collect 4 elements from the diagonal
-            if (checkLine(diagonal1, winners)) {
-                setWinner(diagonal1[0].color);
-                return;
-            }
+            checkAndSetWinningLine(diagonal1);
         }
     }
 
@@ -55,10 +54,7 @@ export function checkForWinner(grid, setWinner, winners) {
                 grid[i + 2][j - 2],
                 grid[i + 3][j - 3]
             ]; // Collect 4 elements from the diagonal
-            if (checkLine(diagonal2, winners)) {
-                setWinner(diagonal2[0].color);
-                return;
-            }
+            checkAndSetWinningLine(diagonal2);
         }
     }
 };
@@ -80,7 +76,7 @@ const checkLine = (line, winners) => {
 };
 
 export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid, winners) {
-    const newGrid = [...grid];
+    const newGrid = grid.map(row => row.map(cell => {return {...cell, winningCell: false}}));
     const column = newGrid.map(row => row[colIndex]);
     if (direction === 'up') {
         column.push(column.shift()); // Shift up
@@ -93,7 +89,7 @@ export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid,
 };
 
 export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid, winners) {
-    const newGrid = [...grid];
+    const newGrid = grid.map(row => row.map(cell => {return {...cell, winningCell: false}}))
     if (direction === 'left') {
         newGrid[rowIndex].push(newGrid[rowIndex].shift()); // Shift left
     } else {

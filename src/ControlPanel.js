@@ -1,5 +1,5 @@
-import { Button, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, Person, PersonFill, Border, PersonCircle, Trophy } from 'react-bootstrap-icons';
+import { Button, Row, Col } from 'react-bootstrap';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 import PlayerAward from './PlayerAward';
@@ -15,6 +15,7 @@ const ControlPanel = () => {
             case 4: return <Icon4CircleFill />;
             case 5: return <Icon5CircleFill />;
             case 6: return <Icon6CircleFill />;
+            default: return <></>;
         }
     };
 
