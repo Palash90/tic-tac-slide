@@ -28,25 +28,27 @@ const GridApp = () => {
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
   const [winners, setWinners] = useState([]); // State to store winner color
   const [cellClicked, setCellClicked] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
+  const [moveActivated, setMoveActivated] = useState(true);
 
-  const setWinner = (winner) => addWinner(winner, winners, setWinners);
+  const isGameOver = () => {
+    return colors.filter(c => !winners.includes(c.val)).length === 1;
+  }
+
+  const setWinner = (winner) => {
+    const activeColors = colors.filter(c => !winners.includes(c.val));
+    addWinner(winner, winners, setWinners);
+  }
   const clearWinners = () => setWinners([]);
 
   const changePlayer = () => {
-    setCellClicked(false);
-    setTurnComplete(true);
     setSelectedColor(getNextColor());
+    setCellClicked(false);
     setTurnComplete(true);
   }
 
   const getNextColor = () => {
     const activeColors = colors.filter(c => !winners.includes(c.val));
     const selectedColorIndex = activeColors.findIndex(c => c.val === selectedColor);
-
-    if (activeColors.length === 1) {
-      setGameOver(true);
-    }
 
     if (selectedColorIndex === activeColors.length - 1) {
       return activeColors[0].val;
@@ -62,18 +64,20 @@ const GridApp = () => {
     winners, setWinner, initializeGrid, clearWinners,
     cellClicked, setCellClicked, getNextColor,
     turnComplete, setTurnComplete, changePlayer,
-    gameOver, setGameOver
+    moveActivated, setMoveActivated, isGameOver
   }
 
   return (
     <AppContext.Provider value={contextValue}>
       <Container className="grid-container main-content p-4 dark-theme">
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        {gameOver ? <Alert variant='info'>Game Over</Alert> : <></>}
+        {isGameOver() ? <Alert variant='info'>Game Over</Alert> : <></>}
         <GameGrid />
       </Container>
     </AppContext.Provider>
   );
+
+
 };
 
 export default GridApp;

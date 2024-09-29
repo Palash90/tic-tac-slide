@@ -1,12 +1,12 @@
-import { Button, Row, Col } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle, SkipForwardBtnFill } from 'react-bootstrap-icons';
+import { Button, Row, Col, Form } from 'react-bootstrap';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle, SkipForwardBtnFill, ArrowsMove } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 import PlayerAward from './PlayerAward';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, gameOver, setGameOver } = useContext(AppContext);
+    const { colors, allColors, setColors, winners, moveActivated, setMoveActivated, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, isGameOver } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -25,7 +25,6 @@ const ControlPanel = () => {
         clearWinners();
         setGrid(initializeGrid(size));
         setTurnComplete(true);
-        setGameOver(false);
     }
 
     const renderPlayerIcons = () => {
@@ -33,7 +32,7 @@ const ControlPanel = () => {
             const active = color.val === selectedColor
 
             if (active) {
-                return <Col>
+                return <Col key={color.name}>
                     <Row>
                         <Col></Col>
                         <Col>
@@ -52,7 +51,7 @@ const ControlPanel = () => {
                     </Row>
                 </Col>
             } else {
-                return <Col>
+                return <Col key={color.name}>
                     <Row>
                         <Col></Col>
                         <Col>
@@ -97,10 +96,18 @@ const ControlPanel = () => {
             {renderPlayers()}
         </Col>
         <Col md={2}>
+            <Form.Check checked={moveActivated} onChange={() => {
+                setMoveActivated(!moveActivated);
+                resetGrid();
+            }
+            } />
+            <ArrowsMove size={30} />
+        </Col>
+        <Col md={2}>
             <Row>{renderPlayerIcons()}</Row>
         </Col>
         <Col md={2}>
-            {cellClicked && !gameOver ? <SkipForwardBtnFill size={60} color={getNextColor()} onClick={() => changePlayer()} style={{ disabled: gameOver }} /> : <></>}
+            {moveActivated && cellClicked && !isGameOver() ? <SkipForwardBtnFill size={60} color={getNextColor()} onClick={() => changePlayer()} /> : <></>}
         </Col>
         <Col md={1} className="text-end">
             <Button variant='light' onClick={() => resetGrid()}>
