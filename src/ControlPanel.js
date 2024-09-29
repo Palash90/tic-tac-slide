@@ -6,7 +6,7 @@ import PlayerAward from './PlayerAward';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, winners, selectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, gameOver, setGameOver } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -20,10 +20,12 @@ const ControlPanel = () => {
     };
 
     const resetGrid = () => {
+        setSelectedColor(colors[0].val);
         setCellClicked(false);
         clearWinners();
         setGrid(initializeGrid(size));
         setTurnComplete(true);
+        setGameOver(false);
     }
 
     const renderPlayerIcons = () => {
@@ -98,7 +100,7 @@ const ControlPanel = () => {
             <Row>{renderPlayerIcons()}</Row>
         </Col>
         <Col md={2}>
-            {cellClicked ? <SkipForwardBtnFill size={60} color={getNextColor()} onClick={() => changePlayer()} /> : <></>}
+            {cellClicked && !gameOver ? <SkipForwardBtnFill size={60} color={getNextColor()} onClick={() => changePlayer()} style={{ disabled: gameOver }} /> : <></>}
         </Col>
         <Col md={1} className="text-end">
             <Button variant='light' onClick={() => resetGrid()}>

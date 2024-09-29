@@ -7,13 +7,13 @@ import PlayerAward from './PlayerAward';
 
 export default function GameGrid() {
 
-    const { selectedColor, winners, setWinner, grid, setGrid, size, cellClicked, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { selectedColor, winners, setWinner, grid, gameOver, setGameOver, setGrid, size, cellClicked, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
 
         // Only allow color change if the cell is not locked and if the selected color is not winner and the previous turn is complete
-        if (!cell.locked && !winners.includes(selectedColor) && turnComplete) {
+        if (!cell.locked && !winners.includes(selectedColor) && turnComplete && !gameOver) {
             cell.color = selectedColor;
             cell.locked = true; // Lock the cell after it gets a color
             setGrid(newGrid);
@@ -53,8 +53,10 @@ export default function GameGrid() {
                     variant="outline-success"
                     className="rotate-button"
                     onClick={() => {
-                        handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners);
-                        changePlayer();
+                        if (!gameOver) {
+                            handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners);
+                            changePlayer();
+                        }
                     }}
                 >
                     <ArrowLeft />
@@ -74,8 +76,10 @@ export default function GameGrid() {
                     variant="outline-success"
                     className="rotate-button"
                     onClick={() => {
-                        handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners);
-                        changePlayer();
+                        if (!gameOver) {
+                            handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners);
+                            changePlayer();
+                        }
                     }}
                 >
                     <ArrowRight />
@@ -89,8 +93,10 @@ export default function GameGrid() {
                         variant="outline-success"
                         className="rotate-button"
                         onClick={() => {
-                            handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners);
-                            changePlayer();
+                            if (!gameOver) {
+                                handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners);
+                                changePlayer();
+                            }
                         }}
                     >
                         <ArrowUp />
@@ -99,8 +105,10 @@ export default function GameGrid() {
                         variant="outline-success"
                         className="rotate-button"
                         onClick={() => {
-                            handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners);
-                            changePlayer();
+                            if (!gameOver) {
+                                handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners);
+                                changePlayer();
+                            }
                         }}
                     >
                         <ArrowDown />

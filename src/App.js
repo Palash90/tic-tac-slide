@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 import allColors from './playerColors';
 import ControlPanel from './ControlPanel';
@@ -28,6 +28,7 @@ const GridApp = () => {
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
   const [winners, setWinners] = useState([]); // State to store winner color
   const [cellClicked, setCellClicked] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   const setWinner = (winner) => addWinner(winner, winners, setWinners);
   const clearWinners = () => setWinners([]);
@@ -40,11 +41,17 @@ const GridApp = () => {
   }
 
   const getNextColor = () => {
-    const selectedColorIndex = colors.findIndex(c => c.val === selectedColor);
-    if (selectedColorIndex === colors.length - 1) {
-      return colors[0].val;
+    const activeColors = colors.filter(c => !winners.includes(c.val));
+    const selectedColorIndex = activeColors.findIndex(c => c.val === selectedColor);
+
+    if (activeColors.length === 1) {
+      setGameOver(true);
+    }
+
+    if (selectedColorIndex === activeColors.length - 1) {
+      return activeColors[0].val;
     } else {
-      return colors[selectedColorIndex + 1].val;
+      return activeColors[selectedColorIndex + 1].val;
     }
   };
 
@@ -54,13 +61,15 @@ const GridApp = () => {
     selectedColorName, setSelectedColorName,
     winners, setWinner, initializeGrid, clearWinners,
     cellClicked, setCellClicked, getNextColor,
-    turnComplete, setTurnComplete, changePlayer
+    turnComplete, setTurnComplete, changePlayer,
+    gameOver, setGameOver
   }
 
   return (
     <AppContext.Provider value={contextValue}>
       <Container className="grid-container main-content p-4 dark-theme">
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
+        {gameOver ? <Alert variant='info'>Game Over</Alert> : <></>}
         <GameGrid />
       </Container>
     </AppContext.Provider>
