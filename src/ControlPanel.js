@@ -6,7 +6,7 @@ import PlayerAward from './PlayerAward';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, setSelectedColorName, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { colors, allColors, setColors, winners, selectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -29,7 +29,6 @@ const ControlPanel = () => {
     const renderPlayerIcons = () => {
         return colors.map((color) => {
             const active = color.val === selectedColor
-            const winner = winners.includes(color.val)
 
             if (active) {
                 return <Col>

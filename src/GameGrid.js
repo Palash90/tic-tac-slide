@@ -1,5 +1,5 @@
 import { AppContext } from './AppContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
@@ -7,7 +7,7 @@ import PlayerAward from './PlayerAward';
 
 export default function GameGrid() {
 
-    const { selectedColor, winners, setWinner, grid, setGrid, size, cellClicked, setCellClicked, setSelectedColor, getNextColor, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { selectedColor, winners, setWinner, grid, setGrid, size, cellClicked, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
