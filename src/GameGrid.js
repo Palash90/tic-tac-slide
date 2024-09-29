@@ -6,21 +6,24 @@ import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons
 import PlayerAward from './PlayerAward';
 
 export default function GameGrid() {
-    const [isHighlighted, setIsHighlighted] = useState(false);
 
-    const { selectedColor, winners, setWinner, grid, setGrid, size, pause, setPause } = useContext(AppContext);
+    const { selectedColor, winners, setWinner, grid, setGrid, size, cellClicked, setCellClicked, setSelectedColor, getNextColor, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
 
-        // Only allow color change if the cell is not locked and if the selected color is not winner
-        if (!cell.locked && !winners.includes(selectedColor)) {
+        // Only allow color change if the cell is not locked and if the selected color is not winner and the previous turn is complete
+        if (!cell.locked && !winners.includes(selectedColor) && turnComplete) {
             cell.color = selectedColor;
             cell.locked = true; // Lock the cell after it gets a color
             setGrid(newGrid);
             checkForWinner(newGrid, setWinner, winners); // Check for a winner after setting a color
+            setCellClicked(true);
+            setTurnComplete(false);
         }
     };
+
+
 
     const getCellStyle = (cell) => {
         var lockedBg = "linear-gradient(to top right, #333333, " + cell.color + ", #666666, " + cell.color + ", #999999, " + cell.color + ", #cccccc, " + cell.color + ", white)";
@@ -46,13 +49,17 @@ export default function GameGrid() {
     return <div className="grid shadow-lg p-3 rounded">
         {grid.map((row, rowIndex) => (
             <div className="grid-row d-flex align-items-center mb-2" key={rowIndex}>
-                <Button
+                {cellClicked ? <Button
                     variant="outline-success"
                     className="rotate-button"
-                    onClick={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners)}
+                    onClick={() => {
+                        handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners);
+                        changePlayer();
+                    }}
                 >
                     <ArrowLeft />
-                </Button>
+                </Button> : <></>}
+
                 {row.map((cell, colIndex) => (
                     <div
                         className="grid-cell border rounded mx-1 shadow-sm"
@@ -63,32 +70,41 @@ export default function GameGrid() {
                         <PlayerAward player={cell.color} winners={winners} size={40} />
                     </div>
                 ))}
-                <Button
+                {cellClicked ? <Button
                     variant="outline-success"
                     className="rotate-button"
-                    onClick={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners)}
+                    onClick={() => {
+                        handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners);
+                        changePlayer();
+                    }}
                 >
                     <ArrowRight />
-                </Button>
+                </Button> : <></>}
             </div>
         ))}
         <div className="grid-column-controls d-flex justify-content-center mt-3">
             {Array.from({ length: size }).map((_, colIndex) => (
                 <div key={colIndex} className="d-flex flex-column align-items-center mx-2">
-                    <Button
+                    {cellClicked ? <Button
                         variant="outline-success"
                         className="rotate-button"
-                        onClick={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners)}
+                        onClick={() => {
+                            handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners);
+                            changePlayer();
+                        }}
                     >
                         <ArrowUp />
-                    </Button>
-                    <Button
+                    </Button> : <></>}
+                    {cellClicked ? <Button
                         variant="outline-success"
                         className="rotate-button"
-                        onClick={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners)}
+                        onClick={() => {
+                            handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners);
+                            changePlayer();
+                        }}
                     >
                         <ArrowDown />
-                    </Button>
+                    </Button> : <></>}
                 </div>
             ))}
         </div>

@@ -1,12 +1,12 @@
 import { Button, Row, Col } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle } from 'react-bootstrap-icons';
+import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle, SkipForwardBtnFill } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
 import PlayerAward from './PlayerAward';
 
 
 const ControlPanel = () => {
-    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, setSelectedColorName, clearWinners, setGrid, initializeGrid, size } = useContext(AppContext);
+    const { colors, allColors, setColors, winners, selectedColor, setSelectedColor, setSelectedColorName, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer } = useContext(AppContext);
 
     const renderPlayers = () => {
         switch (colors.length) {
@@ -20,8 +20,10 @@ const ControlPanel = () => {
     };
 
     const resetGrid = () => {
+        setCellClicked(false);
         clearWinners();
         setGrid(initializeGrid(size));
+        setTurnComplete(true);
     }
 
     const renderPlayerIcons = () => {
@@ -43,12 +45,7 @@ const ControlPanel = () => {
                                 key={color.val}
                                 color={color.val}
                                 size={45}
-                                onClick={() => {
-                                    if (!winner) {
-                                        setSelectedColor(color.val);
-                                        setSelectedColorName(color.name);
-                                    }
-                                }} />
+                            />
                         </Col>
                         <Col></Col>
                     </Row>
@@ -67,12 +64,7 @@ const ControlPanel = () => {
                                 key={color.val}
                                 color={color.val}
                                 size={30}
-                                onClick={() => {
-                                    if (!winner) {
-                                        setSelectedColor(color.val);
-                                        setSelectedColorName(color.name);
-                                    }
-                                }} />
+                            />
                         </Col>
                         <Col></Col>
                     </Row>
@@ -81,7 +73,7 @@ const ControlPanel = () => {
         });
     }
 
-    return <Row className="mb-3">
+    return <Row className="mb-9">
         <Col md={1}><PeopleFill size={30} values={colors.length} color='white' /></Col>
         <Col md={2}>
             <input
@@ -103,8 +95,11 @@ const ControlPanel = () => {
         <Col md={1}>
             {renderPlayers()}
         </Col>
-        <Col md={4}>
+        <Col md={2}>
             <Row>{renderPlayerIcons()}</Row>
+        </Col>
+        <Col md={2}>
+            {cellClicked ? <SkipForwardBtnFill size={60} color={getNextColor()} onClick={() => changePlayer()} /> : <></>}
         </Col>
         <Col md={1} className="text-end">
             <Button variant='light' onClick={() => resetGrid()}>

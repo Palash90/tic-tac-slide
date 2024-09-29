@@ -21,22 +21,40 @@ const GridApp = () => {
   };
 
   const [colors, setColors] = useState(allColors.slice(0, 2));
+  const [turnComplete, setTurnComplete] = useState(true);
   const [size] = useState(8); // Grid size (both rows and columns)
   const [grid, setGrid] = useState(initializeGrid(8));
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
   const [winners, setWinners] = useState([]); // State to store winner color
-  const [pause, setPause] = useState(false);
+  const [cellClicked, setCellClicked] = useState(false);
 
   const setWinner = (winner) => addWinner(winner, winners, setWinners);
   const clearWinners = () => setWinners([]);
+
+  const changePlayer = () => {
+    setCellClicked(false);
+    setTurnComplete(true);
+    setSelectedColor(getNextColor());
+    setTurnComplete(true);
+  }
+
+  const getNextColor = () => {
+    const selectedColorIndex = colors.findIndex(c => c.val === selectedColor);
+    if (selectedColorIndex === colors.length - 1) {
+      return colors[0].val;
+    } else {
+      return colors[selectedColorIndex + 1].val;
+    }
+  };
 
   const contextValue = {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
     selectedColorName, setSelectedColorName,
     winners, setWinner, initializeGrid, clearWinners,
-    pause, setPause
+    cellClicked, setCellClicked, getNextColor,
+    turnComplete, setTurnComplete, changePlayer
   }
 
   return (

@@ -1,7 +1,7 @@
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
 export function checkForWinner(grid, setWinner, winners) {
     const size = grid.length; // Assuming square grid
-    
+
     const checkAndSetWinningLine = (line) => {
         if (checkLine(line, winners)) {
             line.map((i) => i["winningCell"] = true);
@@ -76,7 +76,7 @@ const checkLine = (line, winners) => {
 };
 
 export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid, winners) {
-    const newGrid = grid.map(row => row.map(cell => {return {...cell, winningCell: false}}));
+    const newGrid = grid.map(row => row.map(cell => { return { ...cell, winningCell: false } }));
     const column = newGrid.map(row => row[colIndex]);
     if (direction === 'up') {
         column.push(column.shift()); // Shift up
@@ -89,7 +89,7 @@ export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid,
 };
 
 export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid, winners) {
-    const newGrid = grid.map(row => row.map(cell => {return {...cell, winningCell: false}}))
+    const newGrid = grid.map(row => row.map(cell => { return { ...cell, winningCell: false } }))
     if (direction === 'left') {
         newGrid[rowIndex].push(newGrid[rowIndex].shift()); // Shift left
     } else {
