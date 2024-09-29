@@ -6,6 +6,7 @@ import ControlPanel from './ControlPanel';
 import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
 import { addWinner } from './logic.js';
+import I18nLabel from './I18nLabel.js';
 
 const GridApp = () => {
 
@@ -71,7 +72,7 @@ const GridApp = () => {
     <AppContext.Provider value={contextValue}>
       <Container className="grid-container main-content p-4 dark-theme">
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        {isGameOver() ? <Alert variant='info'>Game Over</Alert> : <></>}
+        {isGameOver() ? <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> : <></>}
         <GameGrid />
       </Container>
     </AppContext.Provider>
