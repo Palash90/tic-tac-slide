@@ -20,7 +20,7 @@ const ControlPanel = () => {
     const renderPlayerIcons = () => {
         return colors.map((color) => {
             const active = color.val === selectedColor
-            return <PlayerIcon active={active} color={color.val} winners={winners} />
+            return <PlayerIcon key={"player-" + color.val} active={active} color={color.val} winners={winners} />
         });
     }
 

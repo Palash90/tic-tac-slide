@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Container } from 'react-bootstrap';
+import { Alert, Container, Row, Stack } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 import allColors from './playerColors';
 import ControlPanel from './ControlPanel';
@@ -69,12 +69,20 @@ const GridApp = () => {
 
   return (
     <AppContext.Provider value={contextValue}>
-      <Container className="grid-container main-content p-4 dark-theme">
-        <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        {isGameOver() ? <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> : <></>}
-        <GameGrid />
+      <Container className="grid-container main-content p-2 dark-theme" fluid>
+        <Row>
+          <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
+        </Row>
+        <Row>
+          {isGameOver() ?
+            <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> :
+            <Alert variant='secondary' />}
+        </Row>
+        <Row>
+          <GameGrid />
+        </Row>
       </Container>
-    </AppContext.Provider>
+    </AppContext.Provider >
   );
 
 

@@ -11,7 +11,7 @@ export default function PlayerIcon({ winners, color, active }) {
                 size={45}
             />
             <sup>
-                <PlayerAward winners={winners} player={color} size={15} />
+                <PlayerAward key={color} winners={winners} player={color} size={15} />
             </sup>
         </Col>
     } else {
@@ -22,7 +22,7 @@ export default function PlayerIcon({ winners, color, active }) {
                 size={45}
             />
             <sup>
-                <PlayerAward winners={winners} player={color} size={15} />
+                <PlayerAward key={color} winners={winners} player={color} size={15} />
             </sup>
         </Col>
     }
