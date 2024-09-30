@@ -44,11 +44,11 @@ const ControlPanel = () => {
             <PlayersControl resetGrid={resetGrid} />
         </Col>
 
-        <Col md={2}>
+        <Col md={1}>
             {NavigationControl()}
         </Col>
 
-        <Col md={5}>
+        <Col md={6}>
             <Row>{renderPlayerIcons()}</Row>
         </Col>
 
