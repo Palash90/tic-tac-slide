@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import PlayerAward from './PlayerAward';
+import PlaceHolder from './PlaceHolder';
 
 export default function GameGrid() {
 
@@ -60,7 +61,7 @@ export default function GameGrid() {
                     }}
                 >
                     <ArrowLeft />
-                </Button> : <></>}
+                </Button> : <PlaceHolder />}
 
                 {row.map((cell, colIndex) => (
                     <div
@@ -90,7 +91,7 @@ export default function GameGrid() {
                     }}
                 >
                     <ArrowRight />
-                </Button> : <></>}
+                </Button> : <PlaceHolder />}
             </div>
         ))}
         <div className="grid-column-controls d-flex justify-content-center mt-3">
@@ -107,7 +108,7 @@ export default function GameGrid() {
                         }}
                     >
                         <ArrowUp />
-                    </Button> : <></>}
+                    </Button> : <PlaceHolder />}
                     {moveActivated && cellClicked ? <Button
                         variant="outline-success"
                         className="rotate-button"
@@ -119,7 +120,7 @@ export default function GameGrid() {
                         }}
                     >
                         <ArrowDown />
-                    </Button> : <></>}
+                    </Button> : <PlaceHolder />}
                 </div>
             ))}
         </div>
