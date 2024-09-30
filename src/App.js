@@ -36,7 +36,6 @@ const GridApp = () => {
   }
 
   const setWinner = (winner) => {
-    const activeColors = colors.filter(c => !winners.includes(c.val));
     addWinner(winner, winners, setWinners);
   }
   const clearWinners = () => setWinners([]);

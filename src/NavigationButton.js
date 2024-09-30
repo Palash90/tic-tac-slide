@@ -3,7 +3,7 @@ import { AppContext } from "./AppContext";
 import { Button } from "react-bootstrap";
 
 export default function NavigationButton({ children, action }) {
-    const { selectedColor, winners, setWinner, grid, getNextColor, isGameOver, moveActivated, setGrid, size, cellClicked, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { isGameOver, moveActivated, cellClicked, changePlayer } = useContext(AppContext);
     if (!moveActivated) {
         return <Button
             variant="outline-secondary"
@@ -13,7 +13,7 @@ export default function NavigationButton({ children, action }) {
             {children}
         </Button>
     }
-    
+
     if (moveActivated && cellClicked) {
         return <Button
             variant="success"

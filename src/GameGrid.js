@@ -1,14 +1,12 @@
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
-import { Button } from 'react-bootstrap';
 import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import PlayerAward from './PlayerAward';
-import PlaceHolder from './PlaceHolder';
 import NavigationButton from './NavigationButton';
 
 export default function GameGrid() {
-    const { selectedColor, winners, setWinner, grid, getNextColor, isGameOver, moveActivated, setGrid, size, cellClicked, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { selectedColor, winners, setWinner, grid, isGameOver, moveActivated, setGrid, size, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];

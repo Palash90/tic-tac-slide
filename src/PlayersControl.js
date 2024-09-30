@@ -1,11 +1,10 @@
-import { Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, Icon6CircleFill, PeopleFill, PersonCircle, PersonFill } from "react-bootstrap-icons"
-import PlayerAward from "./PlayerAward"
+import { Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, Icon6CircleFill, PeopleFill } from "react-bootstrap-icons"
 import { Col, Row } from "react-bootstrap"
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
 
 export default function PlayersControl({ resetGrid }) {
-    const { colors, allColors, setColors, winners, moveActivated, setMoveActivated, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, isGameOver } = useContext(AppContext);
+    const { colors, allColors, setColors } = useContext(AppContext);
     const renderPlayers = () => {
         switch (colors.length) {
             case 2: return <Icon2CircleFill />;

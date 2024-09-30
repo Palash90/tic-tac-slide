@@ -1,8 +1,7 @@
 import { Button, Row, Col, Form } from 'react-bootstrap';
-import { PeopleFill, Icon6CircleFill, Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, ArrowClockwise, PersonFill, PersonCircle, SkipForwardBtnFill, ArrowsMove } from 'react-bootstrap-icons';
+import { ArrowClockwise, SkipForwardBtnFill, ArrowsMove } from 'react-bootstrap-icons';
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
-import PlayerAward from './PlayerAward';
 import PlayerIcon from './PlayerIcon';
 import PlayersControl from './PlayersControl';
 import PlaceHolder from './PlaceHolder';
