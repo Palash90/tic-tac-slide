@@ -69,19 +69,13 @@ const GridApp = () => {
 
   return (
     <AppContext.Provider value={contextValue}>
-      <Container className="grid-container main-content p-2 dark-theme" fluid>
-        <Row>
-          <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        </Row>
-        <Row>
-          {isGameOver() ?
-            <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> :
-            <Alert variant='secondary' />}
-        </Row>
-        <Row>
-          <GameGrid />
-        </Row>
-      </Container>
+      <Stack className='p-4'>
+        <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
+        {isGameOver() ?
+          <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> :
+          <></>}
+        <GameGrid />
+      </Stack>
     </AppContext.Provider >
   );
 
