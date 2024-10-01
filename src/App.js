@@ -6,8 +6,8 @@ import ControlPanel from './ControlPanel';
 import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
 import { addWinner } from './logic.js';
-import I18nLabel from './I18nLabel.js';
 import { checkGameOver } from './logic.js';
+import GameOver from './GameOver.js';
 
 const GridApp = () => {
   // Initialize grid with unique IDs and no initial color
@@ -69,9 +69,7 @@ const GridApp = () => {
     <AppContext.Provider value={contextValue}>
       <Stack className='p-4'>
         <ControlPanel colors={colors} allColors={allColors} setColors={setColors} />
-        {isGameOver() ?
-          <Alert variant='info'><I18nLabel msg="GAME_OVER"></I18nLabel></Alert> :
-          <></>}
+        <GameOver isGameOver={isGameOver} winners={winners} />
         <GameGrid />
       </Stack>
     </AppContext.Provider >

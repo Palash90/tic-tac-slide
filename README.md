@@ -1,2 +1,2 @@
 # tic-tac-slide
-A fun innovative game on top of classic Tic Tac Toe
+A fun multi-player strategic and innovative version of classic tic tac toe for added fun.
