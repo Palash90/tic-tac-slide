@@ -7,9 +7,9 @@ import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
 import { addWinner } from './logic.js';
 import I18nLabel from './I18nLabel.js';
+import { checkGameOver } from './logic.js';
 
 const GridApp = () => {
-
   // Initialize grid with unique IDs and no initial color
   const initializeGrid = (size) => {
     return Array.from({ length: size }, (_, rowIndex) =>
@@ -31,10 +31,6 @@ const GridApp = () => {
   const [cellClicked, setCellClicked] = useState(false);
   const [moveActivated, setMoveActivated] = useState(true);
 
-  const isGameOver = () => {
-    return colors.filter(c => !winners.includes(c.val)).length === 1;
-  }
-
   const setWinner = (winner) => {
     addWinner(winner, winners, setWinners);
   }
@@ -45,6 +41,8 @@ const GridApp = () => {
     setCellClicked(false);
     setTurnComplete(true);
   }
+
+  const isGameOver = () => checkGameOver(winners, colors, grid);
 
   const getNextColor = () => {
     const activeColors = colors.filter(c => !winners.includes(c.val));
@@ -78,8 +76,6 @@ const GridApp = () => {
       </Stack>
     </AppContext.Provider >
   );
-
-
 };
 
 export default GridApp;

@@ -59,7 +59,11 @@ export function checkForWinner(grid, setWinner, winners) {
     }
 };
 
-
+export function checkGameOver(winners, colors, grid) {
+    const onlyPlayerLeft = colors.filter(c => !winners.includes(c.val)).length === 1;
+    const allCellsOccupied = grid.every(row => row.every(cell => cell.color))
+    return onlyPlayerLeft || allCellsOccupied;
+}
 
 // Helper function to check if all blocks in a line (row/column/diagonal) have the same color
 const checkLine = (line, winners) => {
