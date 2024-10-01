@@ -1,3 +1,5 @@
+const WINNING_CELLS = 4;
+
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
 export function checkForWinner(grid, setWinner, winners) {
     const size = grid.length; // Assuming square grid
@@ -12,51 +14,55 @@ export function checkForWinner(grid, setWinner, winners) {
 
     // Check rows for four consecutive elements
     for (let i = 0; i < size; i++) {
-        for (let j = 0; j <= size - 4; j++) {
-            const rowSegment = grid[i].slice(j, j + 4); // Get a segment of 4
+        for (let j = 0; j <= size - WINNING_CELLS; j++) {
+            const rowSegment = grid[i].slice(j, j + WINNING_CELLS); // Get a segment of 4
             checkAndSetWinningLine(rowSegment);
         }
     }
 
-    // Check columns for four consecutive elements
+    // Check columns for WINNING_CELLS consecutive elements
     for (let j = 0; j < size; j++) {
-        for (let i = 0; i <= size - 4; i++) {
-            const columnSegment = [
-                grid[i][j],
-                grid[i + 1][j],
-                grid[i + 2][j],
-                grid[i + 3][j]
-            ]; // Collect 4 elements from the column
-            checkAndSetWinningLine(columnSegment);
+        for (let i = 0; i <= size - WINNING_CELLS; i++) {
+            const columnSegment = [];
+
+            // Collect WINNING_CELLS elements from the current column
+            for (let k = 0; k < WINNING_CELLS; k++) {
+                columnSegment.push(grid[i + k][j]);
+            }
+
+            checkAndSetWinningLine(columnSegment); // Check the current column segment
         }
     }
 
     // Check diagonals
     // Top-left to bottom-right diagonals
-    for (let i = 0; i <= size - 4; i++) {
-        for (let j = 0; j <= size - 4; j++) {
-            const diagonal1 = [
-                grid[i][j],
-                grid[i + 1][j + 1],
-                grid[i + 2][j + 2],
-                grid[i + 3][j + 3]
-            ]; // Collect 4 elements from the diagonal
-            checkAndSetWinningLine(diagonal1);
+    for (let i = 0; i <= size - WINNING_CELLS; i++) {
+        for (let j = 0; j <= size - WINNING_CELLS; j++) {
+            const diagonal1 = [];
+
+            // Collect WINNING_CELLS elements from the diagonal (top-left to bottom-right)
+            for (let k = 0; k < WINNING_CELLS; k++) {
+                diagonal1.push(grid[i + k][j + k]);
+            }
+
+            checkAndSetWinningLine(diagonal1); // Check the current diagonal segment
         }
     }
 
     // Top-right to bottom-left diagonals
-    for (let i = 0; i <= size - 4; i++) {
-        for (let j = 3; j < size; j++) {
-            const diagonal2 = [
-                grid[i][j],
-                grid[i + 1][j - 1],
-                grid[i + 2][j - 2],
-                grid[i + 3][j - 3]
-            ]; // Collect 4 elements from the diagonal
-            checkAndSetWinningLine(diagonal2);
+    for (let i = 0; i <= size - WINNING_CELLS; i++) {
+        for (let j = WINNING_CELLS - 1; j < size; j++) {
+            const diagonal2 = [];
+
+            // Collect WINNING_CELLS elements from the diagonal (top-right to bottom-left)
+            for (let k = 0; k < WINNING_CELLS; k++) {
+                diagonal2.push(grid[i + k][j - k]);
+            }
+
+            checkAndSetWinningLine(diagonal2); // Check the current diagonal segment
         }
     }
+
 };
 
 export function checkGameOver(winners, colors, grid) {
@@ -67,16 +73,27 @@ export function checkGameOver(winners, colors, grid) {
 
 // Helper function to check if all blocks in a line (row/column/diagonal) have the same color
 const checkLine = (line, winners) => {
-    //const color = line[0].color;
-    //return color && line.every(cell => cell.color === color);
-    for (let i = 0; i <= line.length - 4; i++) {
+    for (let i = 0; i <= line.length - WINNING_CELLS; i++) {
         const color = line[i].color;
-        // Check if the current color is defined and if the next three elements have the same color
-        if (color && line[i + 1].color === color && line[i + 2].color === color && line[i + 3].color === color && !winners.includes(color)) {
-            return true; // Found four consecutive elements with the same color
+        // Check if the current color is defined
+        if (color) {
+            let hasWinningStreak = true;
+
+            // Loop through the next WINNING_CELLS - 1 elements and check if they match the current color
+            for (let j = 1; j < WINNING_CELLS; j++) {
+                if (line[i + j].color !== color) {
+                    hasWinningStreak = false;
+                    break;
+                }
+            }
+
+            // If we found WINNING_CELLS consecutive elements with the same color, return true
+            if (hasWinningStreak && !winners.includes(color)) {
+                return true;
+            }
         }
     }
-    return false; // No consecutive four elements found with the same color
+    return false; // No consecutive elements found with the same color
 };
 
 export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid, winners) {

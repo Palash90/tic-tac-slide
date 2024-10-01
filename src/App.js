@@ -9,6 +9,8 @@ import { addWinner } from './logic.js';
 import { checkGameOver } from './logic.js';
 import GameOver from './GameOver.js';
 
+const GRID_SIZE = 6;
+
 const GridApp = () => {
   // Initialize grid with unique IDs and no initial color
   const initializeGrid = (size) => {
@@ -23,8 +25,8 @@ const GridApp = () => {
 
   const [colors, setColors] = useState(allColors.slice(0, 2));
   const [turnComplete, setTurnComplete] = useState(true);
-  const [size] = useState(8); // Grid size (both rows and columns)
-  const [grid, setGrid] = useState(initializeGrid(8));
+  const [size] = useState(GRID_SIZE); // Grid size (both rows and columns)
+  const [grid, setGrid] = useState(initializeGrid(size));
   const [selectedColor, setSelectedColor] = useState(colors[0].val); // Default color selection
   const [selectedColorName, setSelectedColorName] = useState(colors[0].name); // Default color selection
   const [winners, setWinners] = useState([]); // State to store winner color
