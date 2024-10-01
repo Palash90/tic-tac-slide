@@ -9,7 +9,7 @@ import { addWinner } from './logic.js';
 import { checkGameOver } from './logic.js';
 import GameOver from './GameOver.js';
 
-const GRID_SIZE = 6;
+const GRID_SIZE = 8;
 
 const GridApp = () => {
   // Initialize grid with unique IDs and no initial color
