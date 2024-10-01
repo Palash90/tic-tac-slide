@@ -1,13 +1,15 @@
 const WINNING_CELLS = 3;
 
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
-export function checkForWinner(grid, setWinner, winners) {
+export function updateGridState(grid, existingWinners) {
     const size = grid.length; // Assuming square grid
+
+    const winners = [...existingWinners]
 
     const checkAndSetWinningLine = (line) => {
         if (checkLine(line, winners)) {
             line.map((i) => i["winningCell"] = true);
-            setWinner(line[0].color);
+            winners.push(line[0].color)
             return;
         }
     }
@@ -63,6 +65,7 @@ export function checkForWinner(grid, setWinner, winners) {
         }
     }
 
+    return winners;
 };
 
 export function checkGameOver(winners, colors, grid) {
@@ -96,7 +99,7 @@ const checkLine = (line, winners) => {
     return false; // No consecutive elements found with the same color
 };
 
-export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid, winners) {
+export function handleColumnShift(colIndex, direction, grid, setGrid, winners) {
     const newGrid = grid.map(row => row.map(cell => { return { ...cell, winningCell: false } }));
     const column = newGrid.map(row => row[colIndex]);
     if (direction === 'up') {
@@ -106,10 +109,10 @@ export function handleColumnShift(colIndex, direction, grid, setWinner, setGrid,
     }
     newGrid.forEach((row, i) => (row[colIndex] = column[i]));
     setGrid(newGrid);
-    checkForWinner(newGrid, setWinner, winners); // Check for a winner after shifting
+    return updateGridState(newGrid, winners); // Check for a winner after shifting
 };
 
-export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid, winners) {
+export function handleRowShift(rowIndex, direction, grid, setGrid, winners) {
     const newGrid = grid.map(row => row.map(cell => { return { ...cell, winningCell: false } }))
     if (direction === 'left') {
         newGrid[rowIndex].push(newGrid[rowIndex].shift()); // Shift left
@@ -117,11 +120,5 @@ export function handleRowShift(rowIndex, direction, grid, setWinner, setGrid, wi
         newGrid[rowIndex].unshift(newGrid[rowIndex].pop()); // Shift right
     }
     setGrid(newGrid);
-    checkForWinner(newGrid, setWinner, winners); // Check for a winner after shifting
+    return updateGridState(newGrid, winners); // Check for a winner after shifting
 };
-
-export function addWinner(winner, winners, setWinners) {
-    if (!winners.includes(winner)) {
-        setWinners([...winners, winner])
-    }
-}

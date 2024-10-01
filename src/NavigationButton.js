@@ -51,7 +51,7 @@ export default function NavigationButton({ direction, action }) {
         </Button>
     }
 
-    
+
 
     return <ColorInactive> <NavigationIcon /></ColorInactive>;
 }

@@ -1,12 +1,11 @@
 import { AppContext } from './AppContext';
 import { useContext } from 'react';
-import { checkForWinner, handleColumnShift, handleRowShift } from './logic';
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { updateGridState, handleColumnShift, handleRowShift } from './logic';
 import PlayerAward from './PlayerAward';
 import NavigationButton from './NavigationButton';
 
 export default function GameGrid() {
-    const { selectedColor, winners, setWinner, grid, isGameOver, moveActivated, setGrid, size, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
+    const { selectedColor, winners, setWinners, grid, isGameOver, moveActivated, setGrid, size, setCellClicked, turnComplete, setTurnComplete, changePlayer } = useContext(AppContext);
     const handleCellClick = (rowIndex, colIndex) => {
         const newGrid = [...grid];
         const cell = newGrid[rowIndex][colIndex];
@@ -18,7 +17,19 @@ export default function GameGrid() {
             setGrid(newGrid);
             setCellClicked(true);
             setTurnComplete(false);
-            checkForWinner(newGrid, setWinner, winners); // Check for a winner after setting a color
+
+        }
+
+        const updatedWinners = updateGridState(newGrid, winners); // Check for a winner after setting a color
+
+        if (moveActivated && updatedWinners.includes(selectedColor)) {
+            changePlayer()
+        }
+
+        setWinners(updatedWinners)
+
+        if (!moveActivated) {
+            changePlayer();
         }
     };
 
@@ -47,7 +58,7 @@ export default function GameGrid() {
         {grid.map((row, rowIndex) => (
             <div className="grid-row d-flex align-items-center mb-2" key={rowIndex}>
 
-                <NavigationButton key={"left-" + rowIndex} direction='left' action={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners)} />
+                <NavigationButton key={"left-" + rowIndex} direction='left' action={() => handleRowShift(rowIndex, 'left', grid, setGrid, winners)} />
 
                 {row.map((cell, colIndex) => (
                     <div
@@ -56,24 +67,20 @@ export default function GameGrid() {
                         style={getCellStyle(cell)}
                         onClick={() => {
                             handleCellClick(rowIndex, colIndex);
-                            if (!moveActivated) {
-                                setGrid(grid)
-                                checkForWinner(grid, setWinner, winners);
-                                changePlayer();
-                            }
+
                         }}
                     >
                         <PlayerAward player={cell.color} winners={winners} size={40} />
                     </div>
                 ))}
-                <NavigationButton key={"right-" + rowIndex} direction='right' action={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners)} />
+                <NavigationButton key={"right-" + rowIndex} direction='right' action={() => handleRowShift(rowIndex, 'right', grid, setGrid, winners)} />
             </div>
         ))}
         <div className="grid-column-controls d-flex justify-content-center mt-3">
             {Array.from({ length: size }).map((_, colIndex) => (
                 <div key={colIndex} className="d-flex flex-column align-items-center mx-2">
-                    <NavigationButton key={"up-" + colIndex} direction='up' action={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners)} />
-                    <NavigationButton key={"down-" + colIndex} direction='down' action={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners)} />
+                    <NavigationButton key={"up-" + colIndex} direction='up' action={() => setWinners(handleColumnShift(colIndex, 'up', grid, setGrid, winners))} />
+                    <NavigationButton key={"down-" + colIndex} direction='down' action={() => setWinners(handleColumnShift(colIndex, 'down', grid, setGrid, winners))} />
                 </div>
             ))}
         </div>

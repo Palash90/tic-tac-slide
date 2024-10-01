@@ -33,9 +33,6 @@ const GridApp = () => {
   const [cellClicked, setCellClicked] = useState(false);
   const [moveActivated, setMoveActivated] = useState(true);
 
-  const setWinner = (winner) => {
-    addWinner(winner, winners, setWinners);
-  }
   const clearWinners = () => setWinners([]);
 
   const changePlayer = () => {
@@ -64,10 +61,10 @@ const GridApp = () => {
     colors, setColors, allColors, size, grid,
     setGrid, selectedColor, setSelectedColor,
     selectedColorName, setSelectedColorName,
-    winners, setWinner, initializeGrid, clearWinners,
+    winners, initializeGrid, clearWinners,
     cellClicked, setCellClicked, getNextColor,
     turnComplete, setTurnComplete, changePlayer,
-    moveActivated, setMoveActivated, isGameOver
+    moveActivated, setMoveActivated, isGameOver, setWinners
   }
 
   return (
