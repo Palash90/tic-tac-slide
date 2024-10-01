@@ -47,13 +47,17 @@ const GridApp = () => {
   const isGameOver = () => checkGameOver(winners, colors, grid);
 
   const getNextColor = () => {
-    const selectedColorIndex = colors.findIndex(c => c.val === selectedColor);
+    // Start from the index of the selected color in the original colors array
+    let selectedColorIndex = colors.findIndex(c => c.val === selectedColor);
 
-    if (selectedColorIndex === colors.length - 1) {
-      return colors[0].val;
-    } else {
-      return colors[selectedColorIndex + 1].val;
-    }
+    // Loop through the colors array to find the next color that is not a winner
+    do {
+      // Move to the next color, wrapping around to the start if necessary
+      selectedColorIndex = (selectedColorIndex + 1) % colors.length;
+    } while (winners.includes(colors[selectedColorIndex].val));
+
+    // Return the next non-winner color
+    return colors[selectedColorIndex].val;
   };
 
   const contextValue = {
