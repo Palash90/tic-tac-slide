@@ -47,9 +47,7 @@ export default function GameGrid() {
         {grid.map((row, rowIndex) => (
             <div className="grid-row d-flex align-items-center mb-2" key={rowIndex}>
 
-                <NavigationButton action={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners)}>
-                    <ArrowLeft />
-                </NavigationButton>
+                <NavigationButton direction='left' action={() => handleRowShift(rowIndex, 'left', grid, setWinner, setGrid, winners)} />
 
                 {row.map((cell, colIndex) => (
                     <div
@@ -68,20 +66,14 @@ export default function GameGrid() {
                         <PlayerAward player={cell.color} winners={winners} size={40} />
                     </div>
                 ))}
-                <NavigationButton action={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners)}>
-                    <ArrowRight />
-                </NavigationButton>
+                <NavigationButton direction='right' action={() => handleRowShift(rowIndex, 'right', grid, setWinner, setGrid, winners)} />
             </div>
         ))}
         <div className="grid-column-controls d-flex justify-content-center mt-3">
             {Array.from({ length: size }).map((_, colIndex) => (
                 <div key={colIndex} className="d-flex flex-column align-items-center mx-2">
-                    <NavigationButton action={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners)}>
-                        <ArrowUp />
-                    </NavigationButton>
-                    <NavigationButton action={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners)}>
-                        <ArrowDown />
-                    </NavigationButton>
+                    <NavigationButton direction='up' action={() => handleColumnShift(colIndex, 'up', grid, setWinner, setGrid, winners)} />
+                    <NavigationButton direction='down' action={() => handleColumnShift(colIndex, 'down', grid, setWinner, setGrid, winners)} />
                 </div>
             ))}
         </div>
