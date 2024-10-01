@@ -1,4 +1,4 @@
-const WINNING_CELLS = 4;
+const WINNING_CELLS = 3;
 
 // Function to check if 4 blocks of the same color are in a row, column, or diagonal
 export function checkForWinner(grid, setWinner, winners) {

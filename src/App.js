@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Container, Row, Stack } from 'react-bootstrap';
+import { Stack } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 import allColors from './playerColors';
 import ControlPanel from './ControlPanel';
@@ -47,13 +47,12 @@ const GridApp = () => {
   const isGameOver = () => checkGameOver(winners, colors, grid);
 
   const getNextColor = () => {
-    const activeColors = colors.filter(c => !winners.includes(c.val));
-    const selectedColorIndex = activeColors.findIndex(c => c.val === selectedColor);
+    const selectedColorIndex = colors.findIndex(c => c.val === selectedColor);
 
-    if (selectedColorIndex === activeColors.length - 1) {
-      return activeColors[0].val;
+    if (selectedColorIndex === colors.length - 1) {
+      return colors[0].val;
     } else {
-      return activeColors[selectedColorIndex + 1].val;
+      return colors[selectedColorIndex + 1].val;
     }
   };
 
