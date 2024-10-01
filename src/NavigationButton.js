@@ -51,9 +51,7 @@ export default function NavigationButton({ direction, action }) {
         </Button>
     }
 
-    if (moveActivated && cellClicked && winners.includes(selectedColor)) {
-        changePlayer();
-    }
+    
 
     return <ColorInactive> <NavigationIcon /></ColorInactive>;
 }
