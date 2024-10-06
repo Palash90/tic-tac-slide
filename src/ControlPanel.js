@@ -6,9 +6,10 @@ import PlayerIcon from './PlayerIcon';
 import PlayersControl from './PlayersControl';
 import PlaceHolder from './PlaceHolder';
 import getMessageText from './messages';
+import Rules from './Rules';
 
 const ControlPanel = () => {
-    const { colors, winners, moveActivated, setMoveActivated, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, isGameOver } = useContext(AppContext);
+    const { colors, winners, moveActivated, setMoveActivated, selectedColor, setSelectedColor, getNextColor, clearWinners, setGrid, initializeGrid, size, cellClicked, setCellClicked, setTurnComplete, changePlayer, isGameOver, handleShowRule } = useContext(AppContext);
 
     const resetGrid = () => {
         setSelectedColor(colors[0].val);
@@ -60,7 +61,8 @@ const ControlPanel = () => {
         <Col md={2} className="text-end">
             <Row>
                 <Col title={getMessageText("RULES")}>
-                    <Button variant='light' onClick={() => resetGrid()} ><CardChecklist /></Button>
+                    <Button variant='light' onClick={() => handleShowRule()} ><CardChecklist /></Button>
+                    <Rules />
                 </Col>
                 <Col  title={getMessageText("RESTART")}>
                     <Button variant='light' onClick={() => resetGrid()}>

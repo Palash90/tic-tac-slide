@@ -8,7 +8,9 @@ const allMessages = {
     "ENABLE_NAVIGATION": "Enable Row/Column Navigation",
     "DISABLE_NAVIGATION": "Disable Row/Column Navigation",
     "NUM_PLAYERS": "Number of players",
-    "ACTIVE_PLAYER": "Active player"
+    "ACTIVE_PLAYER": "Active player",
+    "GAME_RULES": "Game Rules",
+    "REOPEN_RULES_INSTRUCTION": "To reopen the rules, you can click the rules button on control panel."
 };
 
 export default function getMessageText(msg) {
