@@ -1,6 +1,10 @@
 export default function rules() {
    return `
-## 🎮 How to Play
+## Shift, strategize, and win—welcome to Tic Tac Slide!
+
+
+
+### 🎮 How to Play
 
 1. **Choose Number of Players**: Use the slider in the topmost row to select how many players are participating.
 1. **Player Colors**: Players are assigned distinct colors: Red, Blue, Yellow, Green, Purple, and Pink.

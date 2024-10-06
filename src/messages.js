@@ -9,7 +9,7 @@ const allMessages = {
     "DISABLE_NAVIGATION": "Disable Row/Column Navigation",
     "NUM_PLAYERS": "Number of players",
     "ACTIVE_PLAYER": "Active player",
-    "GAME_RULES": "Game Rules",
+    "WELCOME": "Shift, strategize, and win—welcome to Tic Tac Slide!",
     "REOPEN_RULES_INSTRUCTION": "To reopen the rules, you can click the rules button on control panel."
 };
 
