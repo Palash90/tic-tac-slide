@@ -1,6 +1,7 @@
 import { PersonCircle, PersonFill } from "react-bootstrap-icons"
 import PlayerAward from "./PlayerAward"
 import { Col } from "react-bootstrap"
+import getMessageText from "./messages"
 
 export default function PlayerIcon({ winners, color, active }) {
     if (active) {
@@ -9,6 +10,7 @@ export default function PlayerIcon({ winners, color, active }) {
                 key={color}
                 color={color}
                 size={45}
+                title={getMessageText("ACTIVE_PLAYER")}
             />
             <sup>
                 <PlayerAward key={color} winners={winners} player={color} size={15} />

@@ -5,7 +5,6 @@ import allColors from './playerColors';
 import ControlPanel from './ControlPanel';
 import GameGrid from './GameGrid.js';
 import { AppContext } from './AppContext.js';
-import { addWinner } from './logic.js';
 import { checkGameOver } from './logic.js';
 import GameOver from './GameOver.js';
 

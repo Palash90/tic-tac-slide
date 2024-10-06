@@ -2,6 +2,7 @@ import { Icon2CircleFill, Icon3CircleFill, Icon4CircleFill, Icon5CircleFill, Ico
 import { Col, Row } from "react-bootstrap"
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
+import getMessageText from "./messages";
 
 export default function PlayersControl({ resetGrid }) {
     const { colors, allColors, setColors } = useContext(AppContext);
@@ -15,11 +16,11 @@ export default function PlayersControl({ resetGrid }) {
             default: return <></>;
         }
     };
-    return <Row className="align-items-center">
+    return <Row className="align-items-center" title={getMessageText("NUM_PLAYERS")}>
         <Col xs={2}>
             <PeopleFill size={30} values={colors.length} color='white' />
         </Col>
-        <Col xs={6}>
+        <Col xs={6} >
             <input
                 type="range"
                 className="form-control"
