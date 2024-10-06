@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'react-bootstrap';
 import './index.css'; // Using your index.css
 import allColors from './playerColors';
@@ -32,7 +32,15 @@ const GridApp = () => {
   const [cellClicked, setCellClicked] = useState(false);
   const [moveActivated, setMoveActivated] = useState(true);
 
-  const [showRules, setShowRules] = useState(true);
+  const [showRules, setShowRules] = useState(() => {
+    const saved = localStorage.getItem("showRules");
+    const initialValue = JSON.parse(saved);
+    return initialValue == null || initialValue;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("showRules", JSON.stringify(showRules));
+  }, [showRules]);
 
   const handleCloseRule = () => setShowRules(false);
   const handleShowRule = () => setShowRules(true);
