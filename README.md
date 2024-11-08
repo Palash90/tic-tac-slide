@@ -1,6 +1,4 @@
 # 🎮 Tic Tac Slide
-![Alt text](https://github.com/Palash90/tic-tac-slide/raw/main/img.png "Image Title")
-
 
 Welcome to **Tic Tac Slide**, an exciting extension of the classic Tic Tac Toe game! Engage in strategic gameplay with multiple users as you manipulate the grid to outsmart your opponents.
 
