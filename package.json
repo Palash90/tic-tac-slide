@@ -1,5 +1,5 @@
 {
-  "homepage": "http://tic-tac-slide.palashkantikundu.in",
+  "homepage": "https://palash90.github.io/browser-fat/",
   "name": "tic-tac-slide",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +15,7 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "tic-tac-slide": "file:",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
